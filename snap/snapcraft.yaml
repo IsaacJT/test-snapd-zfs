@@ -6,6 +6,7 @@ description: |
   Special snap for running snapd spread tests
 grade: stable
 confinement: strict
+license: GPL-3.0-only
 
 parts:
   zfsutils:

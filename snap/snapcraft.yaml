@@ -1,0 +1,53 @@
+name: test-snapd-zfs
+base: core22
+version: '0.1'
+summary: Special snap for running snapd spread tests
+description: |
+  Special snap for running snapd spread tests
+grade: stable
+confinement: strict
+
+parts:
+  zfsutils:
+    plugin: nil
+    stage-packages: [zfsutils-linux]
+    stage:
+      - -usr/share/doc
+      - -usr/share/man
+      - -usr/share/lintian
+      - -lib/systemd
+      - -lib/modules-load.d
+      - -lib/udev
+      - -etc/init.d
+      - -etc/sudoers.d
+      - -etc/cron.d
+
+apps:
+  zfs:
+    command: sbin/zfs
+    plugs:
+      - kernel-module-observe
+      - mount-observe
+      - hardware-observe
+      - system-observe
+      - zfs
+  zpool:
+    command: sbin/zpool
+    plugs:
+      - kernel-module-observe
+      - mount-observe
+      - hardware-observe
+      - system-observe
+      - zfs
+  zdb:
+    command: sbin/zdb
+    plugs:
+      - kernel-module-observe
+      - mount-observe
+      - hardware-observe
+      - system-observe
+      - zfs
+
+layout:
+  /etc/zfs/zpool.cache:
+    bind-file: $SNAP_COMMON/zpool.cache
